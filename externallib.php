@@ -159,7 +159,7 @@ class local_apiextension_external extends external_api
     public static function update_grade_item($scaleid, $courseid, $gradeitemid = null): array
     {
         if (!$gradeitemid) {
-            $grade_item = grade_item::fetch(array('itemtype' => 'course', 'courseid' => $courseid));
+            $grade_item = grade_item::fetch_course_item($courseid);
         } else {
             $grade_item = grade_item::fetch(array('id' => $gradeitemid, 'courseid' => $courseid));
         }
@@ -167,7 +167,7 @@ class local_apiextension_external extends external_api
         $grade_item->scaleid = $scaleid;
         $grade_item->scale = grade_scale::fetch(array('id' => $scaleid));
         $grade_item->scale->scale_items = $grade_item->scale->load_items();
-        $grade_item->set_locked(1);
+        //$grade_item->set_locked(1);
         grade_regrade_final_grades($courseid);
         $gradeitemid = $grade_item->id;
 
